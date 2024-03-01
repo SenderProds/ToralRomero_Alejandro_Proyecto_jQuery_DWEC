@@ -1,24 +1,34 @@
 {
-  "name": "pagina_dwec_alejandro_toral",
+  "name": "tailwind",
   "version": "1.0.0",
-  "browsers-list": ">= 3%, last 5 versions, not dead",
   "description": "",
+  "main": "index.js",
   "scripts": {
-    "parcel:desarrollo": "parcel fuente/index.html --dist-dir desarrollo",
-    "parcel:produccion": "parcel build fuente/index.html --public-url ./ --dist-dir produccion",
-    "limpieza": "rimraf desarrollo produccion parcel->cache",
-    "des": "npm run parcel:desarrollo",
-    "prod": "npm-run-all limpieza parcel:produccion",
+    "tailwindcss:vigilante": "tailwindcss -i ./src/css/input.css -o ./src/css/output.css --watch",
+    "parcel:desarrollo": "parcel src/index.html --dist-dir desarrollo",
+    "parcel:produccion": "parcel build src/index.html --public-url './' --dist-dir 'produccion'",
+    "des": "npm-run-all limpia -p tailwindcss:vigilante parcel:desarrollo",
+    "prod": "npm-run-all limpia tailwind-una-vez parcel:produccion",
+    "tailwind-una-vez": "tailwindcss -i ./src/css/input.css -o ./src/output.css",
+    "limpia": "rimraf desarrollo produccion parcel->cache",
+    "ordena": "prettier --write src",
     "eliminar": "rm -rf .parcel-cache/",
     "dev": "npm-run-all eliminar des"
   },
-  "author": "Alejandro Toral Romero",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.11.0",
     "npm-run-all": "^4.1.5",
     "parcel": "^2.11.0",
-    "parcel-plugin-imagemin": "^4.0.2",
-    "rimraf": "^5.0.5"
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.11",
+    "rimraf": "^5.0.5",
+    "tailwindcss": "^3.4.1"
+  },
+  "dependencies": {
+    "bootstrap-icons": "^1.11.3",
+    "flowbite": "^2.3.0",
+    "jquery": "^3.7.1"
   }
 }

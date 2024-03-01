@@ -1,0 +1,24 @@
+{
+  "name": "pagina_dwec_alejandro_toral",
+  "version": "1.0.0",
+  "browsers-list": ">= 3%, last 5 versions, not dead",
+  "description": "",
+  "scripts": {
+    "parcel:desarrollo": "parcel fuente/index.html --dist-dir desarrollo",
+    "parcel:produccion": "parcel build fuente/index.html --public-url ./ --dist-dir produccion",
+    "limpieza": "rimraf desarrollo produccion parcel->cache",
+    "des": "npm run parcel:desarrollo",
+    "prod": "npm-run-all limpieza parcel:produccion",
+    "eliminar": "rm -rf .parcel-cache/",
+    "dev": "npm-run-all eliminar des"
+  },
+  "author": "Alejandro Toral Romero",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.11.0",
+    "npm-run-all": "^4.1.5",
+    "parcel": "^2.11.0",
+    "parcel-plugin-imagemin": "^4.0.2",
+    "rimraf": "^5.0.5"
+  }
+}

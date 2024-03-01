@@ -10,20 +10,53 @@
     <script src="js/script.js" defer></script>
 
 </head>
-<body class="w-full">
+<body class="w-full h-screen">
 
-    <header class="w-full ">
-        <nav class="flex gap-2 align-middle justify-center bg-slate-700">
-            <ul><button id="btnPrincipal" class=" py-2 h-14 hover:bg-slate-300"><i class="bi bi-house"></i>  Principal</button></ul>
-            <ul><button id="btnIniciarSesion" class=" h-14">Iniciar Sesion</button></ul>
-            <ul><button id="btnRegistro" class=" h-14">Registrarse</button></ul>
-            
-        </nav>
+    <header class="w-full h-4 z-10 ">
+        <nav class="flex gap-2 items-center justify-center shadow-lg h-14 w-full fixed z-10 bg-slate-100">
+            <ul><button id="btnPrincipal" class=" py-2 px-2  hover:bg-slate-300  hover:scale-110 duration-100 ease-linear hover:rounded-lg hover:shadow-2xl hidden"><i class="bi bi-house"></i>  Principal</button></ul>
+            <ul><button id="btnIniciarSesion" class=" py-2 px-2  hover:bg-slate-300  hover:scale-110 duration-100 ease-linear hover:rounded-lg hover:shadow-2xl "><i class="bi bi-box-arrow-in-right "></i> Iniciar Sesion</button></ul>
+            <ul><button id="btnRegistro" class=" py-2 px-2  hover:bg-slate-300  hover:scale-110 duration-100 ease-linear hover:rounded-lg hover:shadow-2xl "><i class="bi bi-person"></i> Registrarse</button></ul>
+            <ul><button id="btnCerrarSesion" class="py-2 px-2  hover:bg-slate-300  hover:scale-110 duration-100 ease-linear hover:rounded-lg hover:shadow-2xl hidden"><i class="bi bi-box-arrow-left"></i></i> Cerrar Sesion</button></ul>
     </header>
 
-    <main>
-        <section id="contenido">
+    <main class="w-full h-4/5 -mt-3 ">
+        <section id="contenido" class="h-full flex flex-col items-center justify-center">
+            <form id="iniciarSesion" class="flex flex-col items-center justify-center shadow-md w-5/6 h-3/6 bg-slate-300 rounded-xl text-xl">
+                <label for="username">Usuario</label>
+                <input type="text" name="username" id="username" class="w-3/4 rounded-xl text-center" required>
+
+                <label for="password">Clave</label>
+                <input type="password" name="password" id="password" class="w-3/4 rounded-xl text-center" required>
+
+                <input type="submit" value="Enviar" class="bg-slate-400 py-2 px-2 mt-3 rounded-xl">
+            </form>
+
+
+            <form id="registro" class="flex flex-col items-center justify-center shadow-md w-5/6 h-4/6 bg-slate-300 rounded-xl text-xl hidden">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" id="nombre" class="w-3/4 rounded-xl text-center" required>
+
+                <label for="apellidos">Apellidos</label>
+                <input type="text" name="apellidos" id="apellidos" class="w-3/4 rounded-xl text-center" required>
+                
+                <label for="username">Usuario</label>
+                <input type="text" name="username" id="usernameReg" class="w-3/4 rounded-xl text-center" required>
+
+                <label for="password">Clave</label>
+                <input type="password" name="password" id="passwordReg" class="w-3/4 rounded-xl text-center" required>
+
+                <input type="submit" value="Enviar" class="bg-slate-400 py-2 px-2 mt-3 rounded-xl">
+            </form>
+
             
+            <section id="gatos" class="mt-14 flex flex-col items-center justify-center ">
+                <div id="filtros" class="text-center ">
+
+                </div>
+                
+            </section>
+
         </section>
     </main>
     

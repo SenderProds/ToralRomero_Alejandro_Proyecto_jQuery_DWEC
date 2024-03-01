@@ -7,7 +7,7 @@
     "tailwindcss:vigilante": "tailwindcss -i ./src/css/input.css -o ./src/css/output.css --watch",
     "parcel:desarrollo": "parcel src/index.html --dist-dir desarrollo",
     "parcel:produccion": "parcel build src/index.html --public-url './' --dist-dir 'produccion'",
-    "des": "npm-run-all limpia -p tailwindcss:vigilante parcel:desarrollo",
+    "des": "npm-run-all eliminar -p tailwindcss:vigilante parcel:desarrollo",
     "prod": "npm-run-all limpia tailwind-una-vez parcel:produccion",
     "tailwind-una-vez": "tailwindcss -i ./src/css/input.css -o ./src/output.css",
     "limpia": "rimraf desarrollo produccion parcel->cache",

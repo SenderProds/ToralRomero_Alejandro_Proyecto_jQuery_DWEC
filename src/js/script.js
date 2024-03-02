@@ -102,6 +102,7 @@ $(() => {
   async function generarListaRazas() {
     $("body").css("height", "100%");
     $("#razasCont").remove();
+    $("#cargando").removeClass("hidden");
     let razas = await obtenerRazas();
 
     let ulRazas = document.createElement("ul");
@@ -209,6 +210,7 @@ $(() => {
       }
     }
 
+    $("#cargando").addClass("hidden");
     $("#gatos").append(ulRazas);
 
     eventoMeGusta();
@@ -382,10 +384,15 @@ $(() => {
   async function generaDetalleRaza(id) {
     let info = await obtenerInformacionRaza(id);
     let seccionDetalle = document.createElement("section");
-    seccionDetalle.classList.add('flex', 'flex-col', 'items-center', 'jusfity-center', 'text-center');
+    seccionDetalle.classList.add(
+      "flex",
+      "flex-col",
+      "items-center",
+      "jusfity-center",
+      "text-center"
+    );
     seccionDetalle.id = "detalle";
-    
-    
+
     /*.add(
       "w-5/6",
       "mb-4",
@@ -396,7 +403,7 @@ $(() => {
     );*/
     let imagenes = await obtenerImagenesRaza(id);
     let h1 = document.createElement("h1");
-    let contenedorImagenes = document.createElement('div');
+    let contenedorImagenes = document.createElement("div");
     contenedorImagenes.classList.add(
       "w-5/6",
       "mb-4",
@@ -405,32 +412,28 @@ $(() => {
       "grid-cols-max",
       "gap-2",
       "items-center",
-      'justify-center'
+      "justify-center"
     );
-    let descripcion = document.createElement('p');
+    let descripcion = document.createElement("p");
 
     if ($("#detalle")) {
       $("#detalle").remove();
     }
-    
-
 
     h1.innerHTML = info.name;
 
     imagenes.forEach((elemento) => {
-      let img = document.createElement('img');
+      let img = document.createElement("img");
       console.log(elemento);
       img.classList.add("rounded-xl");
       img.src = elemento.url;
 
       contenedorImagenes.appendChild(img);
-     
     });
     descripcion.innerHTML = info.description;
 
     agregarHijos([h1, contenedorImagenes, descripcion], seccionDetalle);
 
-    
     $("#contenido").append(seccionDetalle);
   }
 
@@ -671,7 +674,7 @@ $(() => {
       return JSON.parse(localStorage.getItem("razas"));
     } else {
       return new Promise((resultado, error) => {
-        let url = "https://catfact.ninja/breeds?limit=15";
+        let url = "https://catfact.ninja/breeds?limit=13";
         $.get(url, "json")
           .done((data) => {
             localStorage.setItem("razas", JSON.stringify(data.data));
@@ -859,13 +862,26 @@ $(() => {
 
     let usuarios = obtenerUsuarios();
 
-    let sesion = usuarios.some((usr) => {
-      return usr.usuario == usuario && usr.clave == password;
-    });
+    if (usuarios) {
+      let sesion = usuarios.some((usr) => {
+        return usr.usuario == usuario && usr.clave == password;
+      });
 
-    if (sesion) {
-      localStorage.setItem("sesion", true);
-      recargarPagina();
+      if (sesion) {
+        localStorage.setItem("sesion", true);
+        recargarPagina();
+      } else {
+        $("#loginIncorrecto").removeClass("hidden");
+
+        setTimeout(function () {
+          $("#loginIncorrecto").addClass("hidden");
+        }, 5000);
+      }
+    } else {
+      $("#loginIncorrecto").removeClass("hidden");
+      setTimeout(function () {
+        $("#loginIncorrecto").addClass("hidden");
+      }, 5000);
     }
   }
 
@@ -886,6 +902,7 @@ $(() => {
     };
 
     let usuarios = obtenerUsuarios();
+
     if (usuarios) {
       usuarios.push(objeto);
     } else {
@@ -894,6 +911,12 @@ $(() => {
     }
 
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    formRegistro.addClass("hidden");
+    formInicioSesion.removeClass("hidden");
+    $("#usuarioRegistrado").removeClass("hidden");
+    setTimeout(function () {
+      $("#usuarioRegistrado").addClass("hidden");
+    }, 5000);
   }
 });
 

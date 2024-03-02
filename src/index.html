@@ -22,18 +22,21 @@
 
     <main class="w-full h-4/5 -mt-3 ">
         <section id="contenido" class="h-full flex flex-col items-center justify-center">
-            <form id="iniciarSesion" class="flex flex-col items-center justify-center shadow-md w-5/6 h-3/6 bg-slate-300 rounded-xl text-xl">
+            <form id="iniciarSesion" class="flex flex-col items-center justify-center shadow-md w-5/6 h-3/6 bg-slate-300 rounded-xl text-xl md:w-2/6">
                 <label for="username">Usuario</label>
-                <input type="text" name="username" id="username" class="w-3/4 rounded-xl text-center" value="usuario" required>
+                <input type="text" name="username" id="username" class="h-10 w-3/4 rounded-xl text-center" value="usuario" required>
 
                 <label for="password">Clave</label>
-                <input type="password" name="password" id="password" class="w-3/4 rounded-xl text-center" value="usuario" required>
+                <input type="password" name="password" id="password" class="h-10 w-3/4 rounded-xl text-center" value="usuario" required>
 
-                <input type="submit" value="Enviar" class="bg-slate-400 py-2 px-2 mt-3 rounded-xl">
+                <input type="submit" value="Enviar" class="bg-slate-400 py-2 px-2 mt-3 rounded-xl cursor-pointer hover:bg-slate-500 hover:scale-110 transition ease-linear">
+                <span id="loginIncorrecto" class="mt-2 bg-red-300 p-2 rounded-lg border border-red-700 hidden w-2/3 text-center">El usuario o clave no es correcto</span>
+                <span id="usuarioRegistrado" class="mt-2 bg-green-300 p-2 rounded-lg border border-green-700 hidden text-center">Usuario Registrado</span>
+
             </form>
 
 
-            <form id="registro" class="flex flex-col items-center justify-center shadow-md w-5/6 h-4/6 bg-slate-300 rounded-xl text-xl hidden">
+            <form id="registro" class="flex flex-col items-center justify-center shadow-md w-5/6 h-4/6 bg-slate-300 rounded-xl text-xl hidden md:w-2/6">
                 <label for="nombre">Nombre</label>
                 <input type="text" name="nombre" id="nombre" class="w-3/4 rounded-xl text-center" required>
 
@@ -46,7 +49,7 @@
                 <label for="password">Clave</label>
                 <input type="password" name="password" id="passwordReg" class="w-3/4 rounded-xl text-center" required>
 
-                <input type="submit" value="Enviar" class="bg-slate-400 py-2 px-2 mt-3 rounded-xl">
+                <input type="submit" value="Enviar" class="bg-slate-400 py-2 px-2 mt-3 rounded-xl cursor-pointer hover:bg-slate-500 hover:scale-110 transition ease-linear">
             </form>
 
             
@@ -66,6 +69,8 @@
                     
                     </nav>
                 </div>
+
+                <div id="cargando" class="hidden mt-5 p-4 rounded-lg bg-orange-300 text-center">Cargando Contenido</div>
                 
             </section>
 

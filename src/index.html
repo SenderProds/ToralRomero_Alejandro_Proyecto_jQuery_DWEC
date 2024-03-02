@@ -24,10 +24,10 @@
         <section id="contenido" class="h-full flex flex-col items-center justify-center">
             <form id="iniciarSesion" class="flex flex-col items-center justify-center shadow-md w-5/6 h-3/6 bg-slate-300 rounded-xl text-xl">
                 <label for="username">Usuario</label>
-                <input type="text" name="username" id="username" class="w-3/4 rounded-xl text-center" required>
+                <input type="text" name="username" id="username" class="w-3/4 rounded-xl text-center" value="usuario" required>
 
                 <label for="password">Clave</label>
-                <input type="password" name="password" id="password" class="w-3/4 rounded-xl text-center" required>
+                <input type="password" name="password" id="password" class="w-3/4 rounded-xl text-center" value="usuario" required>
 
                 <input type="submit" value="Enviar" class="bg-slate-400 py-2 px-2 mt-3 rounded-xl">
             </form>
@@ -51,8 +51,20 @@
 
             
             <section id="gatos" class="mt-14 flex flex-col items-center justify-center ">
-                <div id="filtros" class="text-center ">
+                <div id="filtros" class="text-center w-full flex items-center justify-center mt-5 hidden">
+                    <nav class="flex justify-between w-5/6 md:w-2/6">
+                        <ul class="flex">
+                            <li class="hover:scale-110"><i id="lista" class="bi bi-list text-2xl p-2 bg-orange-300 rounded-l-lg cursor-pointer hover:bg-orange-300"></i></li>
+                            <li class="hover:scale-110"><i id="tabla"  class="bi bi-grid text-2xl p-2 bg-orange-200 rounded-r-lg cursor-pointer hover:bg-orange-300"></i></li>
+                        </ul>
 
+
+                        <ul class="flex">
+                            <li id="asc" class="hover:scale-110"><i class="bi bi-sort-down-alt text-2xl p-2 bg-orange-200 rounded-l-lg cursor-pointer hover:bg-orange-300"></i></li>
+                            <li id="desc" class="hover:scale-110"><i class="bi bi-sort-down text-2xl p-2 bg-orange-200 rounded-r-lg cursor-pointer hover:bg-orange-300"></i></li>
+                        </ul>
+                    
+                    </nav>
                 </div>
                 
             </section>

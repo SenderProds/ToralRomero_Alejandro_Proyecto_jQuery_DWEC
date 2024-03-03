@@ -13,6 +13,9 @@ $(() => {
 
   recargarPagina();
 
+  /**
+   * Recarga La Pagina
+   */
   function recargarPagina() {
     if (localStorage.getItem("sesion") == "true") {
       btnIniciarSesion.addClass("hidden");
@@ -35,10 +38,13 @@ $(() => {
     }
   }
 
+  /**
+   * Crea los eventos de visualizacion y filtrado
+   */
   function eventosVisualizacion() {
     btnLista.off("click");
     btnLista.click((e) => {
-      console.log(e.target);
+
 
       btnLista.addClass("bg-orange-300");
       btnLista.removeClass("bg-orange-200");
@@ -54,7 +60,6 @@ $(() => {
 
     btnTabla.off("click");
     btnTabla.click((e) => {
-      console.log(e.target);
 
       btnLista.removeClass("bg-orange-300");
       btnLista.addClass("bg-orange-200");
@@ -103,6 +108,7 @@ $(() => {
     $("body").css("height", "100%");
     $("#razasCont").remove();
     $("#cargando").removeClass("hidden");
+    $("#filtros").addClass("hidden");
     let razas = await obtenerRazas();
 
     let ulRazas = document.createElement("ul");
@@ -211,6 +217,7 @@ $(() => {
     }
 
     $("#cargando").addClass("hidden");
+    $("#filtros").removeClass("hidden");
     $("#gatos").append(ulRazas);
 
     eventoMeGusta();
@@ -220,6 +227,9 @@ $(() => {
     desplazamientoInfinito();
   }
 
+  /**
+   * Desplazamiento infinito
+   */
   function desplazamientoInfinito() {
     $(window).off("scroll");
     $(window).on("scroll", (e) => {
@@ -228,7 +238,6 @@ $(() => {
         document.documentElement.scrollHeight - 50
       ) {
         let elementos = $("#razasCont").find("li").clone();
-        console.log("Hay");
         $("#razasCont").append(elementos);
 
         eventoFavorito();
@@ -366,14 +375,16 @@ $(() => {
     eventoDetalle();
   }
 
+
+  /**
+   * Evento para que al hacer click se vea el detalle de la raza
+   */
   function eventoDetalle() {
     $("#razasCont").find("li").off();
     $("#razasCont")
       .find("li")
       .click((e) => {
         if (e.target.tagName != "I") {
-          console.log(e.target.parentNode.dataset.id);
-          console.log("Esto es una prueba");
           generaDetalleRaza(e.target.parentNode.dataset.id);
           $("#filtros").addClass("hidden");
           $("#razasCont").addClass("hidden");
@@ -381,6 +392,10 @@ $(() => {
       });
   }
 
+  /**
+   * Genera la vista detalle de la raza
+   * @param {*} id 
+   */
   async function generaDetalleRaza(id) {
     let info = await obtenerInformacionRaza(id);
     let seccionDetalle = document.createElement("section");
@@ -393,28 +408,48 @@ $(() => {
     );
     seccionDetalle.id = "detalle";
 
-    /*.add(
-      "w-5/6",
-      "mb-4",
-      "md:w-5/6",
-      "grid",
-      "grid-cols-2",
-      "gap-2"
-    );*/
     let imagenes = await obtenerImagenesRaza(id);
     let h1 = document.createElement("h1");
+    h1.classList.add(
+      "text-2xl",
+      "font-black",
+      "m-2"
+    );
     let contenedorImagenes = document.createElement("div");
     contenedorImagenes.classList.add(
       "w-5/6",
       "mb-4",
-      "md:w-5/6",
+      "md:w-3/6",
       "grid",
       "grid-cols-max",
       "gap-2",
       "items-center",
       "justify-center"
     );
+    let h1Descripcion = document.createElement("h1");
+    h1Descripcion.innerHTML = "Description";
+    h1Descripcion.classList.add(
+      "font-black"
+    );
+
+
     let descripcion = document.createElement("p");
+    descripcion.classList.add(
+      "w-5/6"
+    );
+
+    let h1Temperament = document.createElement("h1");
+    h1Temperament.innerHTML = "Temperament";
+    h1Temperament.classList.add(
+      "font-black"
+    );
+
+    let pTemperament = document.createElement("p");
+    pTemperament.innerHTML = info.temperament;
+    pTemperament.classList.add(
+      "mb-10"
+    );
+
 
     if ($("#detalle")) {
       $("#detalle").remove();
@@ -424,19 +459,23 @@ $(() => {
 
     imagenes.forEach((elemento) => {
       let img = document.createElement("img");
-      console.log(elemento);
-      img.classList.add("rounded-xl");
+      img.classList.add("rounded-xl", "h-15", "md:w-5/5");
       img.src = elemento.url;
 
       contenedorImagenes.appendChild(img);
     });
     descripcion.innerHTML = info.description;
 
-    agregarHijos([h1, contenedorImagenes, descripcion], seccionDetalle);
+    agregarHijos([h1, contenedorImagenes,h1Descripcion, descripcion, h1Temperament, pTemperament], seccionDetalle);
 
     $("#contenido").append(seccionDetalle);
   }
 
+  /**
+   * Obtiene 5 imagenes de la raza
+   * @param {*} razaId Id de la raza
+   * @returns Imagenes
+   */
   async function obtenerImagenesRaza(razaId) {
     return new Promise((resultado, error) => {
       $.ajax({
@@ -457,6 +496,11 @@ $(() => {
     });
   }
 
+  /**
+   * Obtiene informacion de la raza
+   * @param {*} idRaza Id de raza
+   * @returns Informacion
+   */
   async function obtenerInformacionRaza(idRaza) {
     return new Promise((resultado, error) => {
       $.ajax({
@@ -670,7 +714,6 @@ $(() => {
    */
   async function obtenerRazas() {
     if (localStorage.getItem("razas")) {
-      console.log("Obteniendo del almacenamiento");
       return JSON.parse(localStorage.getItem("razas"));
     } else {
       return new Promise((resultado, error) => {
@@ -678,7 +721,6 @@ $(() => {
         $.get(url, "json")
           .done((data) => {
             localStorage.setItem("razas", JSON.stringify(data.data));
-            console.log(data.data);
             resultado(data.data);
           })
           .fail((XHR, textStatus, errorThrown) => error(errorThrown));
@@ -686,12 +728,18 @@ $(() => {
     }
   }
 
+  /**
+   * Ordena la lista de razas Ascendente
+   */
   function ordenarRazasAscendente() {
     let razas = JSON.parse(localStorage.getItem("razas"));
     razas.sort((a, b) => a.breed.localeCompare(b.breed));
     localStorage.setItem("razas", JSON.stringify(razas));
   }
 
+  /**
+   * Ordena la lista de razas Descendente
+   */
   function ordenarRazasDescendente() {
     let razas = JSON.parse(localStorage.getItem("razas"));
     razas.sort((a, b) => b.breed.localeCompare(a.breed));
@@ -705,11 +753,9 @@ $(() => {
   async function obtenerImagenRazaPorId(idRaza) {
     let imagenRazaAlmacenado = JSON.parse(localStorage.getItem("razaImg"));
 
-    //console.log(!imagenRazaAlmacenado);
-    //console.log(!imagenRazaAlmacenado.idRaza);
 
     if (!imagenRazaAlmacenado || imagenRazaAlmacenado[idRaza] == null) {
-      console.log("Obteniendo imagen por API");
+  
       return new Promise((resultado, error) => {
         $.ajax({
           url: `https://api.thecatapi.com/v1/images/search?breed_ids=${idRaza}`,
@@ -755,7 +801,7 @@ $(() => {
 
     if (!razaIdAlmacenado || razaIdAlmacenado[raza] == null) {
       return new Promise((resultado, error) => {
-        console.log("Obteniendo Id de Raza por API");
+        
         $.ajax({
           url: `https://api.thecatapi.com/v1/breeds/search?name=${raza}`,
           method: "GET",
@@ -787,26 +833,24 @@ $(() => {
         });
       });
     } else {
-      console.log("Obteniendo Id de Raza por Almacenamiento");
+      
       return razaIdAlmacenado[raza];
     }
   }
+
+  /**
+   * Quita una raza de la lista
+   */
   function quitarRaza(raza) {
-    console.log("Eliminando raza " + raza);
     let razas = JSON.parse(localStorage.getItem("razas"));
-    //delete razas.data.breed[raza];
 
     razas = razas.filter((raz) => {
       return raz.breed != raza;
     });
-    console.log(razas);
+
     localStorage.setItem("razas", JSON.stringify(razas));
   }
 
-  //Botón principal header
-  $("#btnPrincipal").click((e) => {
-    console.log("Prueba");
-  });
 
   //Botón registro Header
   $("#btnRegistro").click((e) => {
@@ -833,10 +877,6 @@ $(() => {
     $("#filtros").addClass("hidden");
     $("body").css("height", "100vh");
 
-    //$("#razasCont")
-
-    console.log($("#razasCont"));
-    console.log("Cerrando Sesion");
     recargarPagina();
   });
 
@@ -856,7 +896,7 @@ $(() => {
    * Inicia la sesion
    */
   function iniciarSesion() {
-    console.log("Iniciando Sesion");
+
     let usuario = $("#username").val();
     let password = $("#password").val();
 
